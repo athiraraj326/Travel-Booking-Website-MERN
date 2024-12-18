@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Dropdown, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import logoImg from '../assets/logo.png'
 
 const Header = () => {
     return (
@@ -8,7 +9,7 @@ const Header = () => {
             <Navbar className="position-fixed bg-dark w-100 p-3" style={{ zIndex: 1 }}>
                 <Container className='px-5 mx-5'>
                     <Navbar.Brand href="#home">
-                        <img alt="" src="logo.png" width="45" height="45" className="d-inline-block align-top" />{' '}
+                        <img alt="" src={logoImg} width="45" height="45" className="d-inline-block align-top" />{' '}
                         <span className='fs-2 text-warning'>Travel<span className='text-light fw-bold'>hub</span></span>
                     </Navbar.Brand>
                     <Link to={'/'} className='text-light fw-bold' style={{ textDecoration: 'none' }}>Home</Link>

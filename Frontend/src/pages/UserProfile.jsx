@@ -5,9 +5,11 @@ import Footer from '../components/Footer'
 const UserProfile = () => {
   return (
     <>
-    <Header/>
-      <div>UserProfile</div>
-    <Footer/>
+      <Header />
+      <div style={{ paddingTop: '100px' }}>
+        
+      </div>
+      <Footer />
     </>
   )
 }

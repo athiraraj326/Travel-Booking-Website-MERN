@@ -7,6 +7,7 @@ import Tours from './pages/Tours'
 import ContactUs from './pages/ContactUs'
 import Dashboard from './pages/Dashboard'
 import UserProfile from './pages/UserProfile'
+import ViewTours from './pages/ViewTours'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path='/contactinfo' element={<ContactUs/>}/>
         <Route path='/login' element={<Auth/>}/>
         <Route path='/register' element={<Auth insideRegister={true}/>}/>
+        <Route path='/tour/:id/view' element={<ViewTours/>}/>
         <Route path='/profile' element={<UserProfile/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
       </Routes>

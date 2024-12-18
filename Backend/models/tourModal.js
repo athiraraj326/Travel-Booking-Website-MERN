@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const tourSchema = new mongoose.Schema({
+    country:{
+        type:String,
+        required:true
+    },
     place:{
         type:String,
         required:true
@@ -14,10 +18,6 @@ const tourSchema = new mongoose.Schema({
         required:true
     },
     price:{
-        type:String,
-        required:true
-    },
-    depTime:{
         type:String,
         required:true
     }

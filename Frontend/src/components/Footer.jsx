@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import logoImg from '../assets/logo.png'
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
       <div className="d-flex justify-content-between border-bottom py-4">
         <div className="d-flex flex-column mt-3 w-25">
           <div className='d-flex mb-4'>
-            <img src="logo.png" width="45" height="45" alt="" />     
+            <img src={logoImg} width="45" height="45" alt="" />     
             <h2 className='text-warning ms-2'>Travel<span className='text-light fw-bold'>hub</span></h2>
           </div>         
           <p style={{fontSize:'18px'}}>Travelhub sit amet consectetur adipisicing elit. Perferendis sapiente tenetur officiis explicabo fugit, sit mollitia eum atque excepturi quaerat autem.</p>
