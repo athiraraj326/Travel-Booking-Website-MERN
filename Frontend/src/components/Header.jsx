@@ -1,9 +1,19 @@
 import React from 'react'
 import { Container, Dropdown, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logoImg from '../assets/logo.png'
 
 const Header = () => {
+    const navigate = useNavigate()
+
+    const viewProfile = ()=>{
+        navigate('/profile')
+    }
+    const logout = ()=>{
+        sessionStorage.clear()
+        navigate('/')
+    }
+
     return (
         <>
             <Navbar className="position-fixed bg-dark w-100 p-3" style={{ zIndex: 1 }}>
@@ -24,8 +34,8 @@ const Header = () => {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">Logout</Dropdown.Item>
+                                    <Dropdown.Item onClick={viewProfile} >Profile</Dropdown.Item>
+                                    <Dropdown.Item onClick={logout} >Logout</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                             :

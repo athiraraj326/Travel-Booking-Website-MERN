@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getSingleTourAPI } from '../../services/allAPI'
 import { Accordion } from 'react-bootstrap'
+import Reviews from '../components/Reviews'
 
 const ViewTours = () => {
 
   const [tours, setTours] = useState({})
+  const [price, setPrice] = useState("")
+  const navigate = useNavigate()
   const { id } = useParams()
 
   const [open, setOpen] = useState(false);
@@ -16,20 +19,38 @@ const ViewTours = () => {
     getSingleTours()
   }, [])
 
-  const getSingleTours = async () => {
+  const getSingleTours = async (value) => {
     try {
       const result = await getSingleTourAPI(id)
       // console.log(result);
       if (result.status == 200) {
         setTours(result.data)
+        setPrice(result.data.price)
       }
-
     } catch (err) {
       console.log(err);
     }
   }
 
   console.log(tours);
+
+  const findTotalPrice = (value) => {
+    // console.log(value);
+    if (value > 0) {
+      setPrice(tours.price * value)
+    }
+  }
+  console.log(price);
+
+  const proceedBooking = () => {
+    if (sessionStorage.getItem("token")) {
+      navigate('/tour/booking')
+    } else {
+      alert("Please Login to proceed Booking")
+      navigate('/login')
+    }
+  }
+
 
   return (
     <>
@@ -56,7 +77,7 @@ const ViewTours = () => {
             <Accordion defaultActiveKey="0" className='border-light'>
               <Accordion.Item eventKey="0">
                 <Accordion.Header>
-                <h5><span className='text-warning me-3'>Day 1:</span> Departure</h5>
+                  <h5><span className='text-warning me-3'>Day 1:</span> Departure</h5>
                 </Accordion.Header>
                 <Accordion.Body>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -70,7 +91,7 @@ const ViewTours = () => {
               </Accordion.Item>
               <Accordion.Item eventKey="1">
                 <Accordion.Header>
-                <h5><span className='text-warning me-3'>Day 2:</span> Adventure Beggins</h5>
+                  <h5><span className='text-warning me-3'>Day 2:</span> Adventure Beggins</h5>
                 </Accordion.Header>
                 <Accordion.Body>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -84,7 +105,7 @@ const ViewTours = () => {
               </Accordion.Item>
               <Accordion.Item eventKey="2">
                 <Accordion.Header>
-                <h5><span className='text-warning me-3'>Day 3:</span> Historical Tour</h5>
+                  <h5><span className='text-warning me-3'>Day 3:</span> Historical Tour</h5>
                 </Accordion.Header>
                 <Accordion.Body>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -98,7 +119,7 @@ const ViewTours = () => {
               </Accordion.Item>
               <Accordion.Item eventKey="3">
                 <Accordion.Header>
-                <h5><span className='text-warning me-3'>Day 4:</span> City Tour</h5>
+                  <h5><span className='text-warning me-3'>Day 4:</span> City Tour</h5>
                 </Accordion.Header>
                 <Accordion.Body>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -112,7 +133,7 @@ const ViewTours = () => {
               </Accordion.Item>
               <Accordion.Item eventKey="4">
                 <Accordion.Header>
-                <h5><span className='text-warning me-3'>Day 5:</span> Return</h5>
+                  <h5><span className='text-warning me-3'>Day 5:</span> Return</h5>
                 </Accordion.Header>
                 <Accordion.Body>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -125,30 +146,18 @@ const ViewTours = () => {
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
-            <h3 className='fw-bolder my-3'>Reviews(2)</h3>
-            <div className='d-flex mb-4'>
-              <input type="text" className='w-50 form-control' placeholder='Share your feedbacks...' />
-              <button className="btn bg-warning text-light">Submit</button>
-            </div>
-            <div>
-              <div className="d-flex justify-content-between">
-                <h5><img width={'40px'} src="https://e7.pngegg.com/pngimages/81/570/png-clipart-profile-logo-computer-icons-user-user-blue-heroes-thumbnail.png" alt="" className='me-3' /> customer</h5>
-                <p><span className='fs-5'>5</span> <i class="fa-solid fa-star text-warning"></i></p>
-              </div>
-              <p className='ms-5'>This is an amazing tour.</p>
-            </div>
+            <Reviews tourId={id}/>
           </div>
         </div>
         <div className="col-lg-3">
           <div className="d-flex flex-column border rounded p-4">
-            <h1 className='mb-4 fw-bold'>$99 <span className='fs-5'>/per person</span></h1>
-            <input type="date" className='form-control mb-2' />
-            <input type="number" className='form-control mb-4' placeholder='Number of Person' />
+            <h1 className='mb-4 fw-bold'>${tours.price} <span className='fs-5'>/per person</span></h1>
+            <input onChange={e => findTotalPrice(e.target.value)} type="number" className='form-control mb-4' placeholder='Number of Person' />
             <div className="d-flex justify-content-between mb-3">
               <h4>Total :</h4>
-              <h3 className="text-danger fw-bold">$99</h3>
+              <h3 className="text-danger fw-bold">${price}</h3>
             </div>
-            <button className="btn rounded-pill bg-warning text-light w-100">Book Now</button>
+            <button onClick={proceedBooking} className="btn rounded-pill bg-warning text-light w-100">Book Now</button>
           </div>
         </div>
       </div>

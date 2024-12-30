@@ -6,16 +6,16 @@ import { getAllToursAPI } from '../../services/allAPI'
 import { Link } from 'react-router-dom'
 
 const Tours = () => {
-
+  const [searchKey,setSearchKey] = useState("")
   const [allTours, setAllTours] = useState([])
 
   useEffect(() => {
     getAllTours()
-  }, [])
+  }, [searchKey])
 
   const getAllTours = async () => {
     try {
-      const result = await getAllToursAPI()
+      const result = await getAllToursAPI(searchKey)
       if (result.status == 200) {
         setAllTours(result.data)
       }
@@ -38,7 +38,21 @@ const Tours = () => {
         </div>
       </div>
       <div className='container my-5'>
-        <div className="row">
+        <div className="d-flex justify-content-between align-items-center mx-5 mb-5">
+          <div className='d-flex align-items-center'>
+            <h5 className='fw-bolder text-warning me-3'>Sort by :</h5>
+            <select name="" id="" className='p-2'>
+              <option selected disabled>Price</option>
+              <option value="Low to High">Low to High</option>
+              <option value="High to Low">High to Low</option>
+            </select>
+          </div>
+          <div className='d-flex align-items-center'>
+            <input onChange={e=>setSearchKey(e.target.value)} type="text" placeholder='Search by Country' className='form-control rounded-pill me-2' />
+            <button className='btn bg-warning rounded text-light'><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+        </div>
+        <div className="row row-gap-5">
           {
             allTours?.map(tours => (
               <div className="col-lg-4">
