@@ -7,7 +7,7 @@ const Booking = () => {
     <>
       <Header />
       <div style={{ paddingTop: '100px' }} className='container'>
-        <h1 className='text-center my-4 text-warning'>Book Your Tour</h1>
+        <h1 className='text-center mb-4 text-warning'>Book Your Tour</h1>
         <div className='d-flex justify-content-center'>
           <div className="border rounded p-3 w-50">
             <div className='d-flex align-items-center'>
@@ -40,9 +40,6 @@ const Booking = () => {
               <h5 className='fw-bold'>Total :</h5>
               <h5 className='fw-bold text-danger'>$109</h5>
             </div>
-            <hr />
-            <p>Select Payment Option:</p>
-            <input type="radio" /> <img width={'100px'} className='ms-2' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIERzgbNx5sdd-5Rc44aTW7t-Yybw0Gclofg&s" alt="" />
             <div className="text-center mt-5">
               <button className="btn bg-warning rounded text-light">Proceed to Pay</button>
             </div>

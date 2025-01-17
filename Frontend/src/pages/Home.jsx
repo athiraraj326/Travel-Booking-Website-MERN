@@ -39,12 +39,12 @@ const Home = () => {
       console.log(err);
     }
   }
-  console.log(homeTours);
+  // console.log(homeTours);
 
   const handleSearch = async ()=>{
     const {location,month} = searchContent
     if(location && month){
-      navigate('/tours')
+      navigate(`/search-result/${location}`)
     }else{
       alert("Please enter full details...")
     }

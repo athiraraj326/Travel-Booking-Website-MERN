@@ -49,7 +49,7 @@ const Auth = ({ insideRegister }) => {
           if(result.data.user.role == "admin"){
             setTimeout(()=>{
               setInputData({username:"",email:"",password:""})
-              navigate('/dashboard')
+              navigate('/admin/dashboard')
             },2000)
           }else{
             setTimeout(()=>{

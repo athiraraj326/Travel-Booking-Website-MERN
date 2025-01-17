@@ -11,8 +11,6 @@ export const loginAPI = async (reqBody)=>{
     return await commonAPI("POST",`${SERVER_URL}/login`,reqBody)
 }
 
-// add tours
-
 // get all tours list
 export const getAllToursAPI = async (searchKey)=>{
     return await commonAPI("GET",`${SERVER_URL}/all-tours?search=${searchKey}`,{},searchKey)
@@ -34,6 +32,36 @@ export const addReviewsAPI = async (reqBody,id,reqHeader)=>{
 }
 
 // get tour reviews
-export const getTourReviewsAPI = async (id,reqHeader)=>{
-    return await commonAPI("GET",`${SERVER_URL}/${id}/all-reviews`,{},reqHeader)
+export const getTourReviewsAPI = async (id)=>{
+    return await commonAPI("GET",`${SERVER_URL}/${id}/all-reviews`,{})
+}
+
+// add message
+export const addMessageAPI = async (reqBody)=>{
+    return await commonAPI("POST",`${SERVER_URL}/add-message`,reqBody)
+}
+
+// get all users list
+export const getAllUsersAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/all-users`,{},reqHeader)
+}
+
+// get home search result
+export const getHomeSearchAPI = async (location)=>{
+    return await commonAPI("GET",`${SERVER_URL}/search-result/${location}`,{})
+}
+
+// add tour
+export const addTourAPI = async (reqBody,reqHeader)=>{
+    return await commonAPI("POST",`${SERVER_URL}/add-tour`,reqBody,reqHeader)
+}
+
+// delete tour
+export const deleteTourAPI = async (id,reqHeader)=>{
+    return await commonAPI("DELETE",`${SERVER_URL}/tour/${id}/delete`,{},reqHeader)
+}
+
+// edit tour
+export const updateTourAPI = async (id,reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${SERVER_URL}/tour/${id}/edit`,reqBody,reqHeader)
 }

@@ -1,12 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { addMessageAPI } from '../../services/allAPI'
 
 const ContactUs = () => {
+
+  const [contactDetails, setContactDetails] = useState({
+    name: "", email: "", phone: "", location: "", message: ""
+  })
+  
+  const [isNameInvalid, setIsNameInvalid] = useState(false)
+  const [isEmailInvalid, setIsEmailInvalid] = useState(false)
+  const [isPhoneNumberInvalid, setIsPhoneNumberInvalid] = useState(false)
+
+  const userInputValidation = (inputTag) => {
+    const { name, value } = inputTag
+
+    if (name == "username") {
+      setContactDetails({ ...contactDetails, name: value })
+      !!value.match(/^[a-zA-Z ]*$/) ? setIsNameInvalid(false) : setIsNameInvalid(true)
+    } else if (name == "email") {
+      setContactDetails({ ...contactDetails, email: value })
+      !!value.match(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/) ? setIsEmailInvalid(false) : setIsEmailInvalid(true)
+    } else if (name == "phone") {
+      setContactDetails({ ...contactDetails, phone: value })
+      !!value.match(/^[0-9]{10}$/) ? setIsPhoneNumberInvalid(false) : setIsPhoneNumberInvalid(true)
+    }
+  }
+
+  const handleMessageSubmit = async () => {
+    const { name, email, phone, location, message } = contactDetails
+    if (name && email && phone && location && message) {
+      // alert("call api")
+      try{
+        const result = await addMessageAPI(contactDetails)
+        console.log(result.data);
+        if(result.status==200){
+          alert("Your Message send successfully!!!")
+          setContactDetails({name: "", email: "", phone: "", location: "", message: ""})
+        }
+        
+      }catch(err){
+        console.log(err);
+      }
+    } else {
+      alert("Please fill the form completely...")
+    }
+  }
+
   return (
     <>
-    <Header/>
+      <Header />
       <div>
         <img width={'100%'} height={'600px'} src="contact-banner.jpg" alt="" />
         <div className='position-absolute top-0 w-100 text-center d-flex flex-column
@@ -23,25 +68,34 @@ const ContactUs = () => {
               <Row className="g-2">
                 <Col md>
                   <FloatingLabel controlId="floatingInputName" label="Full Name" className='border border-dark'>
-                    <Form.Control type="text" placeholder="Full Name" />
+                    <Form.Control name='username' value={contactDetails.name} onChange={e => userInputValidation(e.target)} type="text" placeholder="Full Name" />
                   </FloatingLabel>
+                  {
+                    isNameInvalid && <div className='mb-3 fw-bolder text-danger'>Please enter your full name</div>
+                  }
                 </Col>
                 <Col md>
                   <FloatingLabel controlId="floatingInputEmail" label="Email address" className='border border-dark'>
-                    <Form.Control type="email" placeholder="name@example.com" />
+                    <Form.Control name='email' value={contactDetails.email} onChange={e => userInputValidation(e.target)} type="email" placeholder="name@example.com" />
                   </FloatingLabel>
+                  {
+                    isEmailInvalid && <div className='mb-3 fw-bolder text-danger'>Please enter a valid email address</div>
+                  }
                 </Col>
               </Row>
 
               <Row className="g-2">
                 <Col md>
                   <FloatingLabel controlId="floatingInputPhone" label="Phone" className='border border-dark'>
-                    <Form.Control type="text" placeholder="Phone" />
+                    <Form.Control name='phone' value={contactDetails.phone} onChange={e => userInputValidation(e.target)} type="text" placeholder="Phone" />
                   </FloatingLabel>
+                  {
+                    isPhoneNumberInvalid && <div className='mt-2 fw-bolder text-danger'>Please enter a valid phone number</div>
+                  }
                 </Col>
                 <Col md>
-                  <FloatingLabel controlId="floatingInputServices" label="Services" className='border border-dark'>
-                    <Form.Control type="email" placeholder="Services" />
+                  <FloatingLabel controlId="floatingInputLocation" label="Location" className='border border-dark'>
+                    <Form.Control value={contactDetails.location} onChange={e => setContactDetails({ ...contactDetails, location: e.target.value })} type="text" placeholder="Location" />
                   </FloatingLabel>
                 </Col>
               </Row>
@@ -51,10 +105,12 @@ const ContactUs = () => {
                   as="textarea"
                   placeholder="Leave a comment here"
                   style={{ height: '100px' }}
+                  value={contactDetails.message}
+                  onChange={e => setContactDetails({ ...contactDetails, message: e.target.value })}
                 />
               </FloatingLabel>
 
-              <button className='btn btn-warning w-25 rounded fw-bold'>SUBMIT</button>
+              <button onClick={handleMessageSubmit} className='btn btn-warning w-25 rounded fw-bold'>SUBMIT</button>
 
             </div>
           </Col>
@@ -123,7 +179,7 @@ const ContactUs = () => {
           </Col>
         </Row>
       </div>
-    <Footer/>
+      <Footer />
     </>
   )
 }

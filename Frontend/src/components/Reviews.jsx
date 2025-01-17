@@ -43,20 +43,14 @@ const Reviews = ({ tourId }) => {
   }
 
   const getTourReviews = async () => {
-    const token = sessionStorage.getItem("token")
-    if (token) {
-      const reqHeader = {
-        "Authorization": `Bearer ${token}`
+    try {
+      const result = await getTourReviewsAPI(tourId)
+      console.log(result.data);
+      if (result.status == 200) {
+        setAllReviews(result.data)
       }
-      try {
-        const result = await getTourReviewsAPI(tourId, reqHeader)
-        console.log(result.data);
-        if (result.status == 200) {
-          setAllReviews(result.data)
-        }
-      } catch (err) {
-        console.log(err);
-      }
+    } catch (err) {
+      console.log(err);
     }
   }
   console.log(allReviews);
