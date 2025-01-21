@@ -65,3 +65,13 @@ export const deleteTourAPI = async (id,reqHeader)=>{
 export const updateTourAPI = async (id,reqBody,reqHeader)=>{
     return await commonAPI("PUT",`${SERVER_URL}/tour/${id}/edit`,reqBody,reqHeader)
 }
+
+// get booking tour details
+export const getBookingTourAPI = async (id)=>{
+    return await commonAPI("GET",`${SERVER_URL}/tour/${id}/booking`,{})
+}
+
+// order API
+export const orderAPI = async (reqBody,reqHeader)=>{
+    return await commonAPI("POST",`${SERVER_URL}/orders`,reqBody,reqHeader)
+}

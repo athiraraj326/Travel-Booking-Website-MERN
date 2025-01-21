@@ -91,7 +91,7 @@ const Tours = () => {
                 visibleProductCards?.map(tours => (
                   <div className="col-lg-4">
                     <Card style={{ width: '20rem' }}>
-                      <Card.Img variant="top" src={tours.image} />
+                      <Card.Img variant="top" src={tours.image}/>
                       <Card.Body>
                         <Card.Title className='fw-bold border border-warning w-50 text-center p-2'>{tours.country}</Card.Title>
                         <Card.Text>

@@ -45,10 +45,11 @@ exports.getHomeTourController = async (req,res)=>{
 exports.getHomeSearchTourController = async (req,res)=>{
     console.log("Inside getHomeSearchTourController");
     const {location} = req.params 
+   
     try{
         const searchLocation = await tours.find({$or: [
-            { place: location },
-            { country: location }
+            { place: {$regex:location,$options:'i'} },
+            { country: {$regex:location,$options:'i'} }
           ]})
           console.log(searchLocation);
           

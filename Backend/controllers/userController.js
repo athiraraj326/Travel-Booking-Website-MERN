@@ -14,7 +14,7 @@ exports.registerController = async (req, res) => {
         } else {
             const encrypted = await bcrypt.hash(password, 10)
             const newUser = new users({
-                username, email, password: encrypted, profilePic: ""
+                username, email, password: encrypted, profilePic: "", mobile: ""
             })
             await newUser.save()
             res.status(200).json(newUser)

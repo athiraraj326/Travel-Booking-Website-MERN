@@ -4,6 +4,7 @@ const tourController = require('../controllers/tourController')
 const jwtMiddleware = require('../middlewares/jwtMiddleware')
 const reviewController = require('../controllers/reviewController')
 const messageController = require('../controllers/messageController')
+const bookingController = require('../controllers/bookingController')
 
 const router = new express.Router()
 
@@ -45,5 +46,11 @@ router.delete('/tour/:id/delete',jwtMiddleware,tourController.deleteTourControll
 
 // edit tour
 router.put('/tour/:id/edit',jwtMiddleware,tourController.editTourController)
+
+// get booking tour details
+router.get('/tour/:id/booking',bookingController.getBookingTourController)
+
+// create razorpay order
+router.post('/orders',jwtMiddleware,bookingController.razorpayCreateOrderController)
 
 module.exports = router

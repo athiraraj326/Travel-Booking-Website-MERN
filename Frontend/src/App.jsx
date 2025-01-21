@@ -27,7 +27,7 @@ function App() {
         <Route path='/login' element={<Auth/>}/>
         <Route path='/register' element={<Auth insideRegister={true}/>}/>
         <Route path='/tour/:id/view' element={<ViewTours/>}/>
-        <Route path='/tour/booking' element={<Booking/>}/>
+        <Route path='/tour/:id/booking' element={<Booking/>}/>
         <Route path='/profile' element={<UserProfile/>}/>
         <Route path='/booking-successfull' element={<Thankyou/>}/>
         <Route path='/admin/dashboard' element={<Dashboard/>}/>

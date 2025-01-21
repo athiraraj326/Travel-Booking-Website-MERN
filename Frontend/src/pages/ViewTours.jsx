@@ -13,13 +13,11 @@ const ViewTours = () => {
   const navigate = useNavigate()
   const { id } = useParams()
 
-  const [open, setOpen] = useState(false);
-
   useEffect(() => {
     getSingleTours()
   }, [])
 
-  const getSingleTours = async (value) => {
+  const getSingleTours = async () => {
     try {
       const result = await getSingleTourAPI(id)
       // console.log(result);
@@ -42,9 +40,9 @@ const ViewTours = () => {
   }
   console.log(price);
 
-  const proceedBooking = () => {
+  const proceedBooking = (id) => {
     if (sessionStorage.getItem("token")) {
-      navigate('/tour/booking')
+      navigate(`/tour/${id}/booking`)
     } else {
       alert("Please Login to proceed Booking")
       navigate('/login')
@@ -157,7 +155,7 @@ const ViewTours = () => {
               <h4>Total :</h4>
               <h3 className="text-danger fw-bold">${price}</h3>
             </div>
-            <button onClick={proceedBooking} className="btn rounded-pill bg-warning text-light w-100">Book Now</button>
+            <button onClick={()=>proceedBooking(tours._id)} className="btn rounded-pill bg-warning text-light w-100">Book Now</button>
           </div>
         </div>
       </div>
