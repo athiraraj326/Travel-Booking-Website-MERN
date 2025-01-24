@@ -2,21 +2,21 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getBookingTourAPI, orderAPI } from '../../services/allAPI'
+import { addBookingAPI, getBookingTourAPI, orderAPI, validatePaymentAPI } from '../../services/allAPI'
 
 const Booking = () => {
   const navigate = useNavigate()
   const [tourDetails,setTourDetails] = useState({})
-  const [totalprice,setTotalPrice] = useState("")
   const [bookingDetails, setBookingDetails] = useState({
-   country: tourDetails.country, fullName: "", email: "", phNumber: "", address: "", date: "", person: "", paymentMode: "", 
+   fullName: "", email: "", phNumber: "", address: "", date: "", person: "", paymentMode: "", price:""
   })
-  // console.log(bookingDetails);
+  // console.log(bookingDetails);  
+  
   const { id } = useParams()
 
   useEffect(()=>{
     getBookingTour()
-  },[bookingDetails])
+  },[bookingDetails.person])
 
   const tourPrice = tourDetails.price * bookingDetails.person 
 
@@ -48,11 +48,12 @@ const Booking = () => {
         if (result.status == 200) {
           // console.log(result);
           setTourDetails(result.data)
+          setBookingDetails({...bookingDetails,country:result.data.country})
         }
         if(bookingDetails.person>=1){
-          setTotalPrice((result.data.price * bookingDetails.person) + 10)
+          setBookingDetails({...bookingDetails,price:(result.data.price * bookingDetails.person) + 10})
         }else{
-          setTotalPrice(Number(result.data.price) + 10)
+          setBookingDetails({...bookingDetails,price:Number(result.data.price) + 10})
         }
       } catch (err) {
         console.log(err);
@@ -60,19 +61,78 @@ const Booking = () => {
     } 
 
   const handlePayment = async () => {
-    const { fullName, email, phNumber, address, date, person, paymentMode } = bookingDetails
+    const { country,fullName, email, phNumber, address, date, person, paymentMode,price } = bookingDetails
     const token = sessionStorage.getItem("token")
+    const amount = bookingDetails.price
+    const currency = "INR"
+    const paymentDetails = {
+      amount,
+      currency,
+      "receipt": "receiptId"
+    }
     if (token) {
       const reqHeader = {
         "Authorization": `Bearer ${token}`
       }
       if (fullName && email && phNumber && address && date && person && paymentMode) {
-        if (paymentMode === "Online Payment") {
-          // alert("Proceed payment")
-          const result = await orderAPI()
-        } else {
-          navigate('/booking-successfull')
+        try{
+          const result = await addBookingAPI(bookingDetails,reqHeader,id)          
+          console.log(result);
+          if (paymentMode === "Online Payment") {
+            // alert("Proceed payment")
+            const order = await orderAPI(paymentDetails,reqHeader)
+            console.log(order);
+            
+            var options = {
+              "key": "rzp_test_T8LVjDJ5jPTqXf", // Enter the Key ID generated from the Dashboard
+              amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+              currency,
+              "name": "Travelhub", //your business name
+              "description": "Test Transaction",
+              "image": "https://example.com/your_logo",
+              "order_id": order.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+              "handler": async function (response){ 
+                const body ={...response}
+                const validResponse = await validatePaymentAPI(body)
+                // console.log(validResponse);
+                if(validResponse.status==200){
+                  alert("Payment is successfull")
+                  navigate('/booking-successfull')
+                }
+                
+              },
+              "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+                  "name": bookingDetails.fullName, //your customer's name
+                  "email": bookingDetails.email, 
+                  "contact": bookingDetails.phNumber  //Provide the customer's phone number for better conversion rates 
+              },
+              "notes": {
+                  "address": "Razorpay Corporate Office"
+              },
+              "theme": {
+                  "color": "#e89712"
+              }
+          };
+          var rzp1 = new Razorpay(options);
+          rzp1.on('payment.failed', function (response){
+                  alert(response.error.code);
+                  alert(response.error.description);
+                  alert(response.error.source);
+                  alert(response.error.step);
+                  alert(response.error.reason);
+                  alert(response.error.metadata.order_id);
+                  alert(response.error.metadata.payment_id);
+          });
+          rzp1.open();
+          e.preventDefault();
+  
+          } else {
+            navigate('/booking-successfull')
+          }
+        } catch(err){
+          console.log(err);
         }
+        
       } else {
         alert("Please fill the form completely")
       }
@@ -140,7 +200,7 @@ const Booking = () => {
               </div>
               <div className="d-flex justify-content-between">
                 <h5 className='fw-bold'>Total :</h5>
-                <h5 className='fw-bold text-danger'>${totalprice}</h5>
+                <h5 className='fw-bold text-danger'>${bookingDetails.price}</h5>
               </div>
               <div className="text-center mt-5">
                 <button onClick={handlePayment} className="btn bg-warning rounded text-light">Proceed to Pay</button>

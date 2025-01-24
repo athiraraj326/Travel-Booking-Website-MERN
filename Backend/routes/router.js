@@ -53,4 +53,16 @@ router.get('/tour/:id/booking',bookingController.getBookingTourController)
 // create razorpay order
 router.post('/orders',jwtMiddleware,bookingController.razorpayCreateOrderController)
 
+// validate  razorpay payment
+router.post('/validatePayment',bookingController.paymentValidateController)
+
+// add booking details
+router.post('/:id/add-booking',jwtMiddleware,bookingController.addBookingDetailsController)
+
+// get user bookings
+router.get('/user/bookings',jwtMiddleware,bookingController.getUserBookingsController)
+
+// get user bookings
+router.get('/all-bookings',jwtMiddleware,bookingController.getAllBookingsController)
+
 module.exports = router

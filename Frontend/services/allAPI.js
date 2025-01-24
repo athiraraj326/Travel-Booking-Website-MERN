@@ -71,7 +71,27 @@ export const getBookingTourAPI = async (id)=>{
     return await commonAPI("GET",`${SERVER_URL}/tour/${id}/booking`,{})
 }
 
-// order API
+// create order API
 export const orderAPI = async (reqBody,reqHeader)=>{
     return await commonAPI("POST",`${SERVER_URL}/orders`,reqBody,reqHeader)
+}
+
+// payment validate API
+export const validatePaymentAPI = async (reqBody)=>{
+    return await commonAPI("POST",`${SERVER_URL}/validatePayment`,reqBody)
+}
+
+// add booking details
+export const addBookingAPI = async (reqBody,reqHeader,id)=>{
+    return await commonAPI("POST",`${SERVER_URL}/${id}/add-booking`,reqBody,reqHeader)
+}
+
+// get user tour bookings
+export const getUserBookedTourAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/user/bookings`,{},reqHeader)
+}
+
+// get all bookings
+export const getAllBookedTourAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/all-bookings`,{},reqHeader)
 }

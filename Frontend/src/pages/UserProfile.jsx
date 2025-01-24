@@ -1,11 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import EditProfile from '../components/EditProfile'
 import { Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { getUserBookedTourAPI } from '../../services/allAPI'
 
 const UserProfile = () => {
+  const [bookedTours,setBookedTours] = useState([])
+
+  useEffect(()=>{
+    getUserBookings()
+  },[])
+
+  const getUserBookings = async ()=>{
+    const token = sessionStorage.getItem("token")
+    if (token) {
+      const reqHeader = {
+        "Authorization": `Bearer ${token}`
+      }
+      try {
+        const result = await getUserBookedTourAPI(reqHeader)
+        // console.log(result);
+        if(result.status == 200){
+          setBookedTours(result.data)
+        }
+      } catch(err){
+        console.log(err);
+      }
+    }
+  }
+
   return (
     <>
       <Header />
@@ -26,24 +51,30 @@ const UserProfile = () => {
       <div className='container mt-5'>
         <h4 className='text-warning'>My Bookings</h4>
         <div className="row row-gap-3 mt-4">
-          <div className="col-lg-3">
+          {
+            bookedTours?.length>0 ?
+            bookedTours?.map(tour=>(
+              <div className="col-lg-3">
             <Card style={{ width: '16rem' }}>
-              <Card.Img variant="top" src="https://plus.unsplash.com/premium_photo-1661962958462-9e52fda9954d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dGhhaWxhbmR8ZW58MHx8MHx8fDA%3D" />
+              <Card.Img variant="top" src={tour.image} />
               <Card.Body>
                 <div className='d-flex justify-content-between'>
-                  <Card.Title><h4 className='fw-bold'>Country</h4>
-                  <h5>Location : </h5>
+                  <Card.Title><h4 className='fw-bold'>{tour.country}</h4>
+                  <p style={{fontSize:'18px'}}>{tour.place}</p>
                   </Card.Title>
                   <Card.Text>
-                    <h5 className='fw-bolder text-warning'>$ price</h5>
-                    <h5>duration</h5>
+                    <h5 className='text-warning'>{tour.duration}</h5>
                   </Card.Text>
                 </div>
-                  <div className='text-center'><Link to={`/tour/id/view`}><Button variant="warning" className='rounded'>View tour</Button></Link>
+                  <div className='text-center'><Link to={`/tour/${tour.countryId}/view`}><Button variant="warning" className='rounded'>View tour</Button></Link>
                 </div>
               </Card.Body>
             </Card>
           </div>
+            ))
+          :
+          <div className="text-danger fw-bolder">No Bookings...</div>
+          }
         </div>
       </div>
       <Footer />
