@@ -5,6 +5,7 @@ const jwtMiddleware = require('../middlewares/jwtMiddleware')
 const reviewController = require('../controllers/reviewController')
 const messageController = require('../controllers/messageController')
 const bookingController = require('../controllers/bookingController')
+const multerMiddleware = require('../middlewares/multerMiddleware')
 
 const router = new express.Router()
 
@@ -64,5 +65,17 @@ router.get('/user/bookings',jwtMiddleware,bookingController.getUserBookingsContr
 
 // get user bookings
 router.get('/all-bookings',jwtMiddleware,bookingController.getAllBookingsController)
+
+// edit user
+router.put('/edit-user',jwtMiddleware,multerMiddleware.single('profilePic'),userController.editUserController)
+
+// get tour count
+router.get('/alltours/count',tourController.getTourCountController)
+
+// get all reviews
+router.get('/all-reviews',reviewController.getAllReviewsController)
+
+// get all messages
+router.get('/all-messages',messageController.getAllMessageController)
 
 module.exports = router

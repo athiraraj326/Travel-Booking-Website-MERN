@@ -95,3 +95,23 @@ export const getUserBookedTourAPI = async (reqHeader)=>{
 export const getAllBookedTourAPI = async (reqHeader)=>{
     return await commonAPI("GET",`${SERVER_URL}/all-bookings`,{},reqHeader)
 }
+
+// edit user
+export const updateUserAPI = async (reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${SERVER_URL}/edit-user`,reqBody,reqHeader)
+}
+
+// get tour count
+export const getTourCountAPI = async ()=>{
+    return await commonAPI("GET",`${SERVER_URL}/alltours/count`,{})
+}
+
+// get all reviews
+export const getAllReviewAPI = async ()=>{
+    return await commonAPI("GET",`${SERVER_URL}/all-reviews`,{})
+}
+
+// get all messages
+export const getAllMessageAPI = async ()=>{
+    return await commonAPI("GET",`${SERVER_URL}/all-messages`,{})
+}

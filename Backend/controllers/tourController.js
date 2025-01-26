@@ -106,3 +106,14 @@ exports.editTourController = async (req,res)=>{
         res.status(401).json(err)
     }
 }
+
+// get tours count
+exports.getTourCountController = async (req,res)=>{
+    console.log("Inside getTourListController");
+    try{
+        const allHomeTours = await tours.find()
+        res.status(200).json(allHomeTours)
+    }catch(err){
+        res.status(401).json(err)
+    }
+}

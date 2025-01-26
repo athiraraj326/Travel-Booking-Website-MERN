@@ -62,3 +62,20 @@ exports.getAllUserController = async (req,res)=>{
         res.status(401).json(err)
     }
 }
+
+// edit profile
+exports.editUserController = async (req,res)=>{
+    console.log("Inside editUserController");
+    const {username,email,password,profilePic,mobile} = req.body
+    const uploadProfilePic = req.file?req.file.filename:profilePic
+    const id = req.userId
+    try{
+        const updateUser = await users.findByIdAndUpdate({_id:id},{
+            username,email,password,profilePic:uploadProfilePic,mobile
+        },{new:true})
+        await updateUser.save()
+        res.status(200).json(updateUser)
+    } catch (err) {
+        res.status(401).json(err)
+    }
+}

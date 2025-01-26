@@ -14,3 +14,14 @@ exports.addMessageController = async (req,res)=>{
         res.status(401).json(err)
     }
 }
+
+// get all messages
+exports.getAllMessageController = async (req,res)=>{
+    console.log("Inside getAllMessageController");
+    try{
+        const allMessages = await messages.find()
+        res.status(200).json(allMessages)
+    }catch(err){
+        res.status(401).json(err)
+    }
+}

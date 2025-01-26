@@ -5,12 +5,22 @@ import EditProfile from '../components/EditProfile'
 import { Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getUserBookedTourAPI } from '../../services/allAPI'
+import userImg from '../assets/userImg.png'
 
 const UserProfile = () => {
   const [bookedTours,setBookedTours] = useState([])
+  const [userProfile,setUserProfile] = useState({
+    username: "", email: "", password: "", profilePic: "", mobile: ""
+  })
 
   useEffect(()=>{
+    if(sessionStorage.getItem("user")){
+      const user = JSON.parse(sessionStorage.getItem("user"))
+      setUserProfile({...userProfile,username: user.username, email: user.email, password: user.password, mobile: user.mobile})
+    }
+
     getUserBookings()
+    
   },[])
 
   const getUserBookings = async ()=>{
@@ -37,16 +47,21 @@ const UserProfile = () => {
       <div>
         <img width={'100%'} height={'400px'} src="profile-banner.jpg" alt="" />
         <div className="position-absolute bottom-0" style={{ paddingBottom: '160px', paddingLeft: '50px' }}>
-          <img className='border border-3 border-light rounded-circle' width={'180px'} height={'180px'} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB0iyDV7yF0Up_AzCC5Iq84UuLsOwvER4YTg&s" alt="" />
+          {
+            userProfile?.profilePic ?
+            <img className='border border-3 border-light rounded-circle' width={'180px'} height={'180px'} src={userProfile.profilePic} alt="" />
+            :
+            <img className='border border-3 border-light rounded-circle' width={'180px'} height={'180px'} src={userImg} alt="" />
+          }
         </div>
       </div>
       <div style={{ marginLeft: '250px', marginTop: '30px' }} className='w-25'>
         <div className='d-flex justify-content-between'>
-          <h3 className='fw-bold'>Name</h3>
-          <EditProfile />
+          <h3 className='fw-bold'>{userProfile.username}</h3>
+          <EditProfile user={userProfile}/>
         </div>
-        email<br />
-        mobile
+        {userProfile.email}<br />
+        {userProfile.mobile}
       </div>
       <div className='container mt-5'>
         <h4 className='text-warning'>My Bookings</h4>
