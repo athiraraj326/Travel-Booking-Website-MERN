@@ -42,18 +42,18 @@ const HomeSearch = () => {
                     {
                         searchResult?.length > 0 ?
                             searchResult?.map(tour => (
-                                <div className="col-lg-4">
+                                <div key={tour?._id} className="col-lg-4">
                                     <Card style={{ width: '20rem' }}>
-                                        <Card.Img variant="top" src={tour.image} />
+                                        <Card.Img variant="top" src={tour?.image} />
                                         <Card.Body>
-                                            <Card.Title className='fw-bold border border-warning w-50 text-center p-2'>{tour.country}</Card.Title>
+                                            <Card.Title className='fw-bold border border-warning w-50 text-center p-2'>{tour?.country}</Card.Title>
                                             <Card.Text>
-                                                <p>Location : {tour.place}</p>
-                                                <h5> <i class="fa-solid fa-clock text-warning me-2"></i> {tour.duration}</h5>
+                                                <p>Location : {tour?.place}</p>
+                                                <h5> <i class="fa-solid fa-clock text-warning me-2"></i> {tour?.duration}</h5>
                                             </Card.Text>
                                             <div className="d-flex justify-content-between align-items-center">
-                                                <h4 className='fw-bolder'>$ {tour.price}</h4>
-                                                <Link to={`/tour/${tour._id}/view`}><Button variant="warning" className='rounded'>Book Now</Button></Link>
+                                                <h4 className='fw-bolder'>$ {tour?.price}</h4>
+                                                <Link to={`/tour/${tour?._id}/view`}><Button variant="warning" className='rounded'>Book Now</Button></Link>
                                             </div>
                                         </Card.Body>
                                     </Card>

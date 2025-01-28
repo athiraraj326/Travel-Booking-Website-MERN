@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Dropdown, Row } from 'react-bootstrap'
 import SideBar from '../components/SideBar'
 import { getAllBookedTourAPI, getAllMessageAPI, getAllReviewAPI, getAllUsersAPI, getTourCountAPI } from '../../services/allAPI'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState("")
@@ -17,6 +18,14 @@ const Dashboard = () => {
     getReviewsCount()
     getMessageCount()
   }, [])
+
+  const data = [
+    { name: "Facebook", value: 225 },
+    { name: "Insta", value: 200 },
+    { name: "wtsapp", value: 250 },
+    { name: "twitter", value: 150 }
+  ];
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   const getUsersCount = async () => {
     const token = sessionStorage.getItem("token")
@@ -106,28 +115,68 @@ const Dashboard = () => {
               </Dropdown.Menu>
             </Dropdown>
           </div>
-          <div className="d-flex justify-content-evenly my-4">
+          <div className="d-flex justify-content-evenly my-5">
             <div className="rounded bg-info text-light p-3">
-              <h3>Travellers</h3>
+              <h3><i className="fa-solid fa-users me-2"></i> Travellers</h3>
               <h3 className="text-center">{userCount}</h3>
             </div>
             <div className="rounded bg-danger text-light p-3">
-              <h3>Bookings</h3>
+              <h3><i class="fa-solid fa-plane-departure me-2"></i> Bookings</h3>
               <h3 className="text-center">{bookingCount}</h3>
             </div>
             <div className="rounded bg-primary text-light p-3">
-              <h3>Packages</h3>
+              <h3><i class="fa-solid fa-map-location-dot me-2"></i> Packages</h3>
               <h3 className="text-center">{tourCount}</h3>
             </div>
             <div className="rounded bg-success text-light p-3">
-              <h3>Reviews</h3>
+              <h3><i class="fa-solid fa-star-half-stroke me-2"></i> Reviews</h3>
               <h3 className="text-center">{reviewCount}</h3>
             </div>
             <div className="rounded bg-warning text-light p-3">
-              <h3>Messages</h3>
+              <h3><i class="fa-solid fa-message me-2"></i> Messages</h3>
               <h3 className="text-center">{messageCount}</h3>
             </div>
           </div>
+
+          <div className='d-flex justify-content-evenly mt-5'>
+            <BarChart
+              width={400}
+              height={300}
+              data={data}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+              barSize={20}
+            >
+              <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Bar dataKey="value" fill="#8884d8" background={{ fill: '#eee' }} />
+            </BarChart>
+
+            <PieChart width={300} height={300} >
+              <Pie
+                data={data}
+                cx={120}
+                cy={200}
+                innerRadius={60}
+                outerRadius={80}
+                fill="#8884d8"
+                paddingAngle={5}
+                dataKey="value"
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+            </PieChart>
+          </div>
+
         </Col>
       </Row>
     </>

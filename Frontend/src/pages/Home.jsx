@@ -136,12 +136,12 @@ const Home = () => {
             <Slider {...settings}>
               {
                 homeTours?.map(tour => (
-                  <div className='position-relative'>
-                    <img width={'350px'} height={'400px'} src={tour.image} alt="" />
+                  <div key={tour?._id} className='position-relative'>
+                    <img width={'350px'} height={'400px'} src={tour?.image} alt="" />
                     <div className='position-absolute bottom-0'>
                       <div className="d-flex justify-content-center align-items-center border border-3 border-warning bg-light mx-3 mb-2" style={{width:'320px'}}>
-                        <h2 className='bg-light p-2'>{tour.country}</h2>
-                        <h2 className='text-warning fw-bolder ms-5 p-2'>$ {tour.price}</h2>
+                        <h2 className='bg-light p-2'>{tour?.country}</h2>
+                        <h2 className='text-warning fw-bolder ms-5 p-2'>$ {tour?.price}</h2>
                       </div>
                     </div>
                   </div>

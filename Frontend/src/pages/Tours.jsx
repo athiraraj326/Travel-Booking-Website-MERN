@@ -89,18 +89,18 @@ const Tours = () => {
             {
               allTours?.length > 0 ?
                 visibleProductCards?.map(tours => (
-                  <div className="col-lg-4">
+                  <div className="col-lg-4" key={tours._id}>
                     <Card style={{ width: '20rem' }}>
-                      <Card.Img variant="top" src={tours.image}/>
+                      <Card.Img variant="top" src={tours?.image}/>
                       <Card.Body>
-                        <Card.Title className='fw-bold border border-warning w-50 text-center p-2'>{tours.country}</Card.Title>
+                        <Card.Title className='fw-bold border border-warning w-50 text-center p-2'>{tours?.country}</Card.Title>
                         <Card.Text>
-                          <p>Location : {tours.place}</p>
-                          <h5> <i class="fa-solid fa-clock text-warning me-2"></i> {tours.duration}</h5>
+                          <p>Location : {tours?.place}</p>
+                          <h5> <i class="fa-solid fa-clock text-warning me-2"></i> {tours?.duration}</h5>
                         </Card.Text>
                         <div className="d-flex justify-content-between align-items-center">
-                          <h4 className='fw-bolder'>$ {tours.price}</h4>
-                          <Link to={`/tour/${tours._id}/view`}><Button variant="warning" className='rounded'>Book Now</Button></Link>
+                          <h4 className='fw-bolder'>$ {tours?.price}</h4>
+                          <Link to={`/tour/${tours?._id}/view`}><Button variant="warning" className='rounded'>Book Now</Button></Link>
                         </div>
                       </Card.Body>
                     </Card>

@@ -36,27 +36,29 @@ const AllUsers = () => {
             <table className="table my-5">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Contact Info</th>
                 </tr>
               </thead>
-              {
-                allUsers?.map(user => (
-                  <tbody>
-                    <tr>
-                      <td>{user.username}</td>
-                      <td>{user.email}</td>
+              <tbody>
+                {
+                  allUsers?.map((user, index) => (
+                    <tr key={user?._id}>
+                      <td>{index + 1}</td>
+                      <td>{user?.username}</td>
+                      <td>{user?.email}</td>
                       {
-                        user.mobile?
-                        <td>{user.mobile}</td>
-                        :
-                        <td>No Info</td>
+                        user?.mobile ?
+                          <td>{user.mobile}</td>
+                          :
+                          <td>No Info</td>
                       }
                     </tr>
-                  </tbody>
-                ))
-              }
+                  ))
+                }
+              </tbody>
             </table>
           </div>
         </Col>

@@ -67,9 +67,9 @@ const Reviews = ({ tourId }) => {
               <div>
                 <div className="d-flex justify-content-between">
                   <h5><img width={'30px'} src="https://e7.pngegg.com/pngimages/81/570/png-clipart-profile-logo-computer-icons-user-user-blue-heroes-thumbnail.png" alt="" className='me-3' /> {review.username}</h5>
-                  <p><span className='fs-5'>{review.rating}</span> <i class="fa-solid fa-star text-warning"></i></p>
+                  <p><span className='fs-5'>{review?.rating}</span> <i class="fa-solid fa-star text-warning"></i></p>
                 </div>
-                <p className='ms-5'>{review.reviewText}</p>
+                <p className='ms-5'>{review?.reviewText}</p>
                 <hr />
               </div>
             </>

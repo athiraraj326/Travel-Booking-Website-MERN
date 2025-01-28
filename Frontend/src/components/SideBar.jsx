@@ -12,6 +12,8 @@ const SideBar = () => {
                 <p><Link to={'/admin/all-tours'} className='text-decoration-none text-light'>Packages</Link></p>
                 <p><Link to={'/admin/all-users'} className='text-decoration-none text-light'>Travellers</Link></p>
                 <p><Link to={'/admin/booking-history'} className='text-decoration-none text-light'>Booking History</Link></p>
+                <p><Link to={'/admin/all-reviews'} className='text-decoration-none text-light'>Tour Reviews</Link></p>
+                <p><Link to={'/admin/messages'} className='text-decoration-none text-light'>Messages</Link></p>
             </div>
         </Col>
     )

@@ -37,6 +37,7 @@ const BookingHistory = () => {
             <table className="table my-5">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Country</th>
                   <th>Name</th>
                   <th>Date</th>
@@ -48,15 +49,16 @@ const BookingHistory = () => {
               </thead>
               <tbody>
                 {
-                  allBookings?.map(item => (
-                    <tr>
-                      <td><img width={'50px'} height={'50px'} className='rounded me-2' src={item.image} alt="" /> {item.country}</td>
-                      <td>{item.fullName}</td>
-                      <td>{item.date}</td>
-                      <td>{item.duration}</td>
-                      <td>{item.person} adults</td>
-                      <td>{item.paymentMode}</td>
-                      <td>${item.price}</td>
+                  allBookings?.map((item,index) => (
+                    <tr key={item?._id}>
+                      <td>{index+1}</td>
+                      <td><img width={'50px'} height={'50px'} className='rounded me-2' src={item?.image} alt="" /> {item.country}</td>
+                      <td>{item?.fullName}</td>
+                      <td>{item?.date}</td>
+                      <td>{item?.duration}</td>
+                      <td>{item?.person} adults</td>
+                      <td>{item?.paymentMode}</td>
+                      <td>${item?.price}</td>
                     </tr>
                   ))
                 }

@@ -54,14 +54,14 @@ const ViewTours = () => {
     <>
       <Header />
       <div>
-        <img width={'100%'} height={'600px'} src={tours.image} alt="" />
+        <img width={'100%'} height={'600px'} src={tours?.image} alt="" />
         <div className='position-absolute top-0 w-100  d-flex align-items-end' style={{ background: 'rgba(0, 0, 0, 0.6)', height: '600px' }}>
           <div className='ms-5 mb-5'>
-            <h1 className='text-light' style={{ fontSize: '60px' }}>{tours.country}</h1>
-            <h3 className='text-light'>{tours.place}</h3>
+            <h1 className='text-light' style={{ fontSize: '60px' }}>{tours?.country}</h1>
+            <h3 className='text-light'>{tours?.place}</h3>
             <div className='border-start border-warning d-flex flex-column text-light ps-3 mt-5'>
               <h3>Duration</h3>
-              <h1>{tours.duration}</h1>
+              <h1>{tours?.duration}</h1>
             </div>
           </div>
         </div>

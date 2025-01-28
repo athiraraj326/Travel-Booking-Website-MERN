@@ -69,6 +69,7 @@ exports.editUserController = async (req,res)=>{
     const {username,email,password,profilePic,mobile} = req.body
     const uploadProfilePic = req.file?req.file.filename:profilePic
     const id = req.userId
+    
     try{
         const updateUser = await users.findByIdAndUpdate({_id:id},{
             username,email,password,profilePic:uploadProfilePic,mobile

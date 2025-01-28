@@ -6,17 +6,20 @@ import { Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getUserBookedTourAPI } from '../../services/allAPI'
 import userImg from '../assets/userImg.png'
+import SERVER_URL from '../../services/serverUrl'
 
 const UserProfile = () => {
   const [bookedTours,setBookedTours] = useState([])
   const [userProfile,setUserProfile] = useState({
     username: "", email: "", password: "", profilePic: "", mobile: ""
   })
+  console.log(userProfile);  
+  
 
   useEffect(()=>{
     if(sessionStorage.getItem("user")){
       const user = JSON.parse(sessionStorage.getItem("user"))
-      setUserProfile({...userProfile,username: user.username, email: user.email, password: user.password, mobile: user.mobile})
+      setUserProfile({...userProfile,username: user.username, email: user.email, password: user.password, profilePic:user.profilePic, mobile: user.mobile})
     }
 
     getUserBookings()
@@ -49,7 +52,7 @@ const UserProfile = () => {
         <div className="position-absolute bottom-0" style={{ paddingBottom: '160px', paddingLeft: '50px' }}>
           {
             userProfile?.profilePic ?
-            <img className='border border-3 border-light rounded-circle' width={'180px'} height={'180px'} src={userProfile.profilePic} alt="" />
+            <img className='border border-3 border-light rounded-circle' width={'180px'} height={'180px'} src={`${SERVER_URL}/uploads/${userProfile?.profilePic}`} alt="" />
             :
             <img className='border border-3 border-light rounded-circle' width={'180px'} height={'180px'} src={userImg} alt="" />
           }
@@ -58,7 +61,7 @@ const UserProfile = () => {
       <div style={{ marginLeft: '250px', marginTop: '30px' }} className='w-25'>
         <div className='d-flex justify-content-between'>
           <h3 className='fw-bold'>{userProfile.username}</h3>
-          <EditProfile user={userProfile}/>
+          <EditProfile/>
         </div>
         {userProfile.email}<br />
         {userProfile.mobile}

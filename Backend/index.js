@@ -10,6 +10,7 @@ const TravelServer = express()
 TravelServer.use(cors())
 TravelServer.use(express.json())
 TravelServer.use(router)
+TravelServer.use('/uploads' ,express.static('./uploads'))
 
 const PORT = 3000 || process.env.PORT
 

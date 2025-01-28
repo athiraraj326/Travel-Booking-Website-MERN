@@ -14,6 +14,8 @@ import ViewAllTours from './pages/ViewAllTours'
 import AllUsers from './pages/AllUsers'
 import BookingHistory from './pages/BookingHistory'
 import HomeSearch from './pages/HomeSearch'
+import AllReviews from './pages/AllReviews'
+import Messages from './pages/Messages'
 
 function App() {
 
@@ -35,6 +37,8 @@ function App() {
         <Route path='/admin/all-users' element={<AllUsers/>}/>
         <Route path='/admin/booking-history' element={<BookingHistory/>}/>
         <Route path='/search-result/:location' element={<HomeSearch/>}/>
+        <Route path='/admin/all-reviews' element={<AllReviews/>}/>
+        <Route path='/admin/messages' element={<Messages/>}/>
       </Routes>
     </>
   )
